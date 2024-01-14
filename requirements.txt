@@ -1,0 +1,13 @@
+numpy
+matplotlib
+pandas
+torch
+scipy
+Pillow
+tqdm
+argparse
+pathlib
+textwrap3
+ipython
+google.generativeai
+streamlit
