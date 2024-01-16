@@ -2,6 +2,7 @@ import streamlit as st
 from pathlib import Path
 import base64
 from lib.google_model.google_model import GoogleModel
+from lib.google_model.prompt import PromptData, Prompt
 # Initial page config
 
 st.set_page_config(
@@ -26,7 +27,22 @@ def cs_sidebar():
     st.sidebar.markdown('''
 <small>Welcome to Gemineats! An AI-powered tool for quickly determining creative, fun, and delicious recipes for any occasion!</small>
     ''', unsafe_allow_html=True)
-
+    prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
+    if prompt_choice == "Recommended":
+        allergies = st.sidebar.multiselect(label = "Select all relevant allergies", options = ["nuts", "fruits", "gluten", "soy", "dairy", "honey"])
+        types_of_food = st.sidebar.multiselect(label = "Select all styles of food", options = ["American", "Chinese", "Mexican", "Italian", "French", "Japanese", "Thai"])
+        prompt_data_config = {
+            "prompt_choice": "Recommended",
+            "allergies": allergies,
+            "types_of_food": types_of_food
+        }
+    elif prompt_choice == "Custom":
+        prompt_data_config = {
+            "prompt_choice": "Custom",
+            "allergies": None,
+            "types_of_food": None
+        }
+    return prompt_data_config
     # st.sidebar.markdown('__Install and import__')
 
     # st.sidebar.code('$ pip install streamlit')
@@ -70,38 +86,53 @@ def cs_sidebar():
 #     st.sidebar.markdown('''<hr>''', unsafe_allow_html=True)
 #     st.sidebar.markdown('''<small>[Cheat sheet v1.25.0](https://github.com/daniellewisDL/streamlit-cheat-sheet)  | Aug 2023 | [Daniel Lewis](https://daniellewisdl.github.io/)</small>''', unsafe_allow_html=True)
 
-    return None
+    
 
 ##########################
 # Main body of cheat sheet
 ##########################
 
-def cs_body(GOOGLE_API_KEY):
+def cs_body(GOOGLE_API_KEY, prompt_data_config):
 
     col1, = st.columns(1)
 
     #######################################
     # COLUMN 1
     #######################################
-    
-    # Display text
+    prompt_data = PromptData()
+    prompt_data.set_prompt_data(prompt_data_config=prompt_data_config)
+    prompt = Prompt(prompt_data=prompt_data)
     ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
-
-    if prompt := st.chat_input("What are you hungry for?"):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
+    if prompt_data.prompt_choice == "Recommended":
+        if len(prompt_data.allergies) > 0 and len(prompt_data.types_of_food) > 0:
+            prompt.construct_prompt()
             ai_model.generate_recipe(prompt = prompt)
+            message_placeholder = st.empty()
             message_placeholder.markdown(ai_model.recipe + "▌")
             message_placeholder.markdown(ai_model.recipe)
-        st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+            st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+            save = st.download_button("Save Recipe", data = ai_model.recipe)
+    elif prompt_data.prompt_choice == "Custom":
+        # Display text
+        for message in st.session_state.messages:
+            with st.chat_message(message["role"]):
+                st.markdown(message["content"])
+
+        if custom_prompt := st.chat_input("What are you hungry for?"):
+            prompt.construct_prompt(prompt=custom_prompt)
+            st.session_state.messages.append({"role": "user", "content": custom_prompt})
+            with st.chat_message("user"):
+                st.markdown(custom_prompt)
+
+            with st.chat_message("assistant"):
+                message_placeholder = st.empty()
+                ai_model.generate_recipe(prompt = prompt)
+                message_placeholder.markdown(ai_model.recipe + "▌")
+                message_placeholder.markdown(ai_model.recipe)
+            st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+            
+            save = st.download_button("Save Recipe", data = ai_model.recipe)
 #     col1.code('''
 # st.text('Fixed width text')
 # st.markdown('_Markdown_') # see #*

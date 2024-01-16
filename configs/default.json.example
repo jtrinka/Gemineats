@@ -1,0 +1,8 @@
+{
+"GOOGLE_API_KEY": "YOUR_API_KEY_HERE",
+"prompt_data_config":{
+    "prompt_choice": "Recommended",
+    "allergies": ["nuts", "fruits"],
+    "types_of_food": ["American", "Chinese", "Indonesian"]
+    }
+}

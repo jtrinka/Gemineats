@@ -1,7 +1,7 @@
 # Ignore Logs
 logs
 # Ignore config
-configs
+configs/default.json
 # Ignore __pycache__
 __pycache__
 # Ignore .vscode
