@@ -78,9 +78,9 @@ class Prompt:
         if self.drink_pairing is False:
             return ""
         elif self.drink_pairing is True and self.construct_allergy_prompt() != "":
-            return "Can you recommend a drink pairing with the recommended meal that adheres to the aforementioned allergy information?"
+            return "Can you recommend an alcoholic drink pairing with the recommended meal that adheres to the aforementioned allergy information?"
         elif self.drink_pairing is True and self.construct_allergy_prompt() == "":
-            return "Can you recommend a drink pairing with the recommended meal?"
+            return "Can you recommend am alcoholic drink pairing with the recommended meal?"
 
 
     def construct_prompt(self, prompt = ""):
@@ -98,7 +98,7 @@ class Prompt:
             else:
                 total_available_ingredients = self.construct_available_ingredients_prompt()
             
-            self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients + self.construct_drink_pairing_prompt
+            self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients + self.construct_drink_pairing_prompt()
         elif self.prompt_choice == "Custom":
             self.prompt += prompt
     

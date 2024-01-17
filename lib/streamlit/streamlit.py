@@ -37,7 +37,7 @@ def cs_sidebar():
         available_ingredients = st.sidebar.text_input(label = "Optional: List your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
         if available_ingredients == "None":
             available_ingredients = None
-        drink_pairing = st.sidebar.toggle(label = "Request an alcholic drink pairing")
+        drink_pairing = st.sidebar.toggle(label = "Request an alcoholic drink pairing")
         generate_recipe_bool = st.sidebar.button("Generate Recipe")
         prompt_data_config = {
             "prompt_choice": "Recommended",
