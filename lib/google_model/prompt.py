@@ -14,20 +14,19 @@ class PromptData:
         self.available_ingredients = prompt_data_config["available_ingredients"]
 class Prompt:
     def __init__(self, prompt_data: PromptData):
-        self.base_prompt = 'You are a recipe recommendation engine whose job it is to give delicious food recipes.'
+        self.prompt = 'You are a recipe recommendation engine whose job it is to give delicious food recipes.'
         self.prompt_choice = prompt_data.prompt_choice
         if self.prompt_choice == 'Recommended':
             self.allergies = prompt_data.allergies
             self.types_of_food = prompt_data.types_of_food
             self.available_ingredients = prompt_data.available_ingredients
-        self.prompt = None
 
     def construct_allergy_prompt(self):
         allergy_string = ""
         if self.allergies is not None:
             N_allergies = len(self.allergies)
         else:
-            return allergy_string
+            N_allergies = 0
         N_allergies = len(self.allergies)
         if N_allergies == 0:
             return allergy_string
@@ -48,7 +47,7 @@ class Prompt:
         if self.types_of_food is not None:
             N_types = len(self.types_of_food)
         else:
-            return types_of_food_string
+            N_types = 0
         if N_types == 0:
             return types_of_food_string
         elif N_types == 1:
@@ -87,9 +86,9 @@ class Prompt:
             else:
                 total_available_ingredients = self.construct_available_ingredients_prompt()
             
-            self.prompt = self.base_prompt + total_allergy_prompt + total_food_prompt + total_available_ingredients 
+            self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients 
         elif self.prompt_choice == "Custom":
-            self.prompt = self.base_prompt+prompt
+            self.prompt += prompt
     
 if __name__ == "__main__":
     with open(file="./configs/default.json") as f:
