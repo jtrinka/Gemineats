@@ -7,6 +7,8 @@ if __name__ == "__main__":
 
     prompt_data_config = config["prompt_data_config"]
     GOOGLE_API_KEY = config["GOOGLE_API_KEY"]
-    prompt_data_config=cs_sidebar()
-    cs_body(GOOGLE_API_KEY=GOOGLE_API_KEY, prompt_data_config=prompt_data_config)
+    prompt_data_config, generate_recipe_bool=cs_sidebar()
+    cs_body(GOOGLE_API_KEY=GOOGLE_API_KEY, 
+            prompt_data_config=prompt_data_config,
+            generate_recipe_bool=generate_recipe_bool)
    

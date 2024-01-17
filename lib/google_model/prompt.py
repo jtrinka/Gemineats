@@ -6,25 +6,32 @@ class PromptData:
         self.prompt_choice: str
         self.allergies: List[str]
         self.types_of_food: List[str]
-    def set_prompt_data(self, prompt_data_config):
+        self.available_ingredients: str
+    def set_prompt_data(self, prompt_data_config: dict):
         self.prompt_choice = prompt_data_config["prompt_choice"]
         self.allergies = prompt_data_config["allergies"]
         self.types_of_food = prompt_data_config["types_of_food"]
-
+        self.available_ingredients = prompt_data_config["available_ingredients"]
 class Prompt:
-
     def __init__(self, prompt_data: PromptData):
         self.base_prompt = 'You are a recipe recommendation engine whose job it is to give delicious food recipes.'
         self.prompt_choice = prompt_data.prompt_choice
         if self.prompt_choice == 'Recommended':
             self.allergies = prompt_data.allergies
             self.types_of_food = prompt_data.types_of_food
+            self.available_ingredients = prompt_data.available_ingredients
         self.prompt = None
 
     def construct_allergy_prompt(self):
         allergy_string = ""
+        if self.allergies is not None:
+            N_allergies = len(self.allergies)
+        else:
+            return allergy_string
         N_allergies = len(self.allergies)
-        if N_allergies == 1:
+        if N_allergies == 0:
+            return allergy_string
+        elif N_allergies == 1:
             return self.allergies[0]
         elif N_allergies == 2:
             return self.allergies[0] + " or " + self.allergies[1]
@@ -38,8 +45,13 @@ class Prompt:
 
     def construct_type_of_food_prompt(self):
         types_of_food_string = ""
-        N_types = len(self.types_of_food)
-        if N_types == 1:
+        if self.types_of_food is not None:
+            N_types = len(self.types_of_food)
+        else:
+            return types_of_food_string
+        if N_types == 0:
+            return types_of_food_string
+        elif N_types == 1:
             return self.types_of_food[0]
         elif N_types == 2:
             return self.types_of_food[0] + " and/or " + self.types_of_food[1]
@@ -50,11 +62,32 @@ class Prompt:
                 else:
                     types_of_food_string += type_of_food+", and/or "
             return types_of_food_string
+        
+    def construct_available_ingredients_prompt(self):
+        available_ingredients_string = ""
+        if self.available_ingredients == "" or self.available_ingredients is None:
+            return available_ingredients_string
+        else:
+            available_ingredients_string += " The recipe recommendation should also use the following ingredients: " + self.available_ingredients + "."
+            return available_ingredients_string
+
 
     def construct_prompt(self, prompt = ""):
         if self.prompt_choice == "Recommended":
-            self.prompt = self.base_prompt + " The recommendation cannot contain " + self.construct_allergy_prompt() + ". " + \
-            "The recommendation should also have influences from " + self.construct_type_of_food_prompt() + " cuisines."
+            if self.construct_allergy_prompt() == "":
+                total_allergy_prompt = ""
+            else:
+                total_allergy_prompt = " The recipe recommendation cannot contain " + self.construct_allergy_prompt() + "."
+            if self.construct_type_of_food_prompt() == "":
+                total_food_prompt = ""
+            else:
+                total_food_prompt = " The recipe recommendation should have influences from " + self.construct_type_of_food_prompt() + " cuisines."     
+            if self.construct_available_ingredients_prompt() == "":
+                total_available_ingredients = ""
+            else:
+                total_available_ingredients = self.construct_available_ingredients_prompt()
+            
+            self.prompt = self.base_prompt + total_allergy_prompt + total_food_prompt + total_available_ingredients 
         elif self.prompt_choice == "Custom":
             self.prompt = self.base_prompt+prompt
     
@@ -67,3 +100,4 @@ if __name__ == "__main__":
     prompt_data.set_prompt_data(prompt_data_config=prompt_data_config)
     prompt = Prompt(prompt_data=prompt_data)
     prompt.construct_prompt()
+    print(prompt.prompt)

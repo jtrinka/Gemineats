@@ -29,20 +29,31 @@ def cs_sidebar():
     ''', unsafe_allow_html=True)
     prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
     if prompt_choice == "Recommended":
-        allergies = st.sidebar.multiselect(label = "Select all relevant allergies", options = ["nuts", "fruits", "gluten", "soy", "dairy", "honey"])
-        types_of_food = st.sidebar.multiselect(label = "Select all styles of food", options = ["American", "Chinese", "Mexican", "Italian", "French", "Japanese", "Thai"])
+        allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "Nuts", "Fruits", "Gluten", "Soy", "Dairy", "Honey"])
+        if "None" in allergies:
+            allergies = None
+        types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Italian", "French", "Japanese", "Thai"])
+        if "None" in types_of_food:
+            types_of_food = None
+        available_ingredients = st.sidebar.text_input(label = "Optional: List your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
+        if available_ingredients == "None":
+            available_ingredients = None
+        generate_recipe_bool = st.sidebar.button("Generate Recipe")
         prompt_data_config = {
             "prompt_choice": "Recommended",
             "allergies": allergies,
-            "types_of_food": types_of_food
+            "types_of_food": types_of_food,
+            "available_ingredients": available_ingredients
         }
     elif prompt_choice == "Custom":
+        generate_recipe_bool = False
         prompt_data_config = {
             "prompt_choice": "Custom",
             "allergies": None,
-            "types_of_food": None
+            "types_of_food": None,
+            "available_ingredients": None
         }
-    return prompt_data_config
+    return prompt_data_config, generate_recipe_bool
     # st.sidebar.markdown('__Install and import__')
 
     # st.sidebar.code('$ pip install streamlit')
@@ -92,7 +103,7 @@ def cs_sidebar():
 # Main body of cheat sheet
 ##########################
 
-def cs_body(GOOGLE_API_KEY, prompt_data_config):
+def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
 
     col1, = st.columns(1)
 
@@ -105,14 +116,14 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config):
     ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
     if prompt_data.prompt_choice == "Recommended":
-        if len(prompt_data.allergies) > 0 and len(prompt_data.types_of_food) > 0:
+        if generate_recipe_bool is True:
             prompt.construct_prompt()
             ai_model.generate_recipe(prompt = prompt)
             message_placeholder = st.empty()
             message_placeholder.markdown(ai_model.recipe + "▌")
             message_placeholder.markdown(ai_model.recipe)
             st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
-            save = st.download_button("Save Recipe", data = ai_model.recipe)
+            st.download_button("Save Recipe", data = ai_model.recipe)
     elif prompt_data.prompt_choice == "Custom":
         # Display text
         for message in st.session_state.messages:
@@ -132,7 +143,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config):
                 message_placeholder.markdown(ai_model.recipe)
             st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
             
-            save = st.download_button("Save Recipe", data = ai_model.recipe)
+            st.download_button("Save Recipe", data = ai_model.recipe)
 #     col1.code('''
 # st.text('Fixed width text')
 # st.markdown('_Markdown_') # see #*
