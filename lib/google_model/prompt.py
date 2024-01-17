@@ -7,19 +7,23 @@ class PromptData:
         self.allergies: List[str]
         self.types_of_food: List[str]
         self.available_ingredients: str
+        self.drink_pairing: bool
     def set_prompt_data(self, prompt_data_config: dict):
         self.prompt_choice = prompt_data_config["prompt_choice"]
         self.allergies = prompt_data_config["allergies"]
         self.types_of_food = prompt_data_config["types_of_food"]
         self.available_ingredients = prompt_data_config["available_ingredients"]
+        self.drink_pairing = prompt_data_config["drink_pairing"]
 class Prompt:
     def __init__(self, prompt_data: PromptData):
         self.prompt = 'You are a recipe recommendation engine whose job it is to give delicious food recipes.'
         self.prompt_choice = prompt_data.prompt_choice
+        self.drink_pairing = False
         if self.prompt_choice == 'Recommended':
             self.allergies = prompt_data.allergies
             self.types_of_food = prompt_data.types_of_food
             self.available_ingredients = prompt_data.available_ingredients
+            self.drink_pairing = prompt_data.drink_pairing
 
     def construct_allergy_prompt(self):
         allergy_string = ""
@@ -69,6 +73,14 @@ class Prompt:
         else:
             available_ingredients_string += " The recipe recommendation should also use the following ingredients: " + self.available_ingredients + "."
             return available_ingredients_string
+    
+    def construct_drink_pairing_prompt(self):
+        if self.drink_pairing is False:
+            return ""
+        elif self.drink_pairing is True and self.construct_allergy_prompt() != "":
+            return "Can you recommend a drink pairing with the recommended meal that adheres to the aforementioned allergy information?"
+        elif self.drink_pairing is True and self.construct_allergy_prompt() == "":
+            return "Can you recommend a drink pairing with the recommended meal?"
 
 
     def construct_prompt(self, prompt = ""):
@@ -86,7 +98,7 @@ class Prompt:
             else:
                 total_available_ingredients = self.construct_available_ingredients_prompt()
             
-            self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients 
+            self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients + self.construct_drink_pairing_prompt
         elif self.prompt_choice == "Custom":
             self.prompt += prompt
     
