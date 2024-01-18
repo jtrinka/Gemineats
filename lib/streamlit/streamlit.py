@@ -4,7 +4,7 @@ import base64
 from lib.google_model.google_model import GoogleModel
 from lib.google_model.prompt import PromptData, Prompt
 
-LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
+LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."
 
 st.set_page_config(
      page_title='Gemineats',
@@ -35,17 +35,19 @@ def cs_sidebar():
         types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Spanish", "Italian", "French", "Japanese", "Thai", "German", "Scandinavian", "Polish", "Ethiopian", "Nigerian", "South African", "Egyptian"])
         if "None" in types_of_food:
             types_of_food = None
-        available_ingredients = st.sidebar.text_input(label = "Optional: List your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
+        available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
         if available_ingredients == "None":
             available_ingredients = None
-        drink_pairing = st.sidebar.toggle(label = "Request an alcoholic drink pairing")
+        nonalcoholic_drink_pairing = st.sidebar.toggle(label = "Request a nonalcoholic drink pairing")
+        alcoholic_drink_pairing = st.sidebar.toggle(label = "Request an alcoholic drink pairing (selecting this option confirms the user is 21 years of age or older)")
         generate_recipe_bool = st.sidebar.button("Generate Recipe")
         prompt_data_config = {
             "prompt_choice": "Recommended",
             "allergies": allergies,
             "types_of_food": types_of_food,
             "available_ingredients": available_ingredients,
-            "drink_pairing": drink_pairing
+            "nonalcoholic_drink_pairing": nonalcoholic_drink_pairing,
+            "alcoholic_drink_pairing": alcoholic_drink_pairing
         }
     elif prompt_choice == "Custom":
         generate_recipe_bool = False
@@ -54,7 +56,8 @@ def cs_sidebar():
             "allergies": None,
             "types_of_food": None,
             "available_ingredients": None,
-            "drink_pairing": False
+            "nonalcoholic_drink_pairing": False,
+            "alcoholic_drink_pairing": False
         }
     creator_information = st.sidebar.toggle(label = "Show Gemineats Creator Info.")
     if creator_information is True:
