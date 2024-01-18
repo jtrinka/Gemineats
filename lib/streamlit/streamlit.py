@@ -4,6 +4,7 @@ import base64
 from lib.google_model.google_model import GoogleModel
 from lib.google_model.prompt import PromptData, Prompt
 
+LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator(s) of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
 
 st.set_page_config(
      page_title='Gemineats',
@@ -28,10 +29,10 @@ def cs_sidebar():
     ''', unsafe_allow_html=True)
     prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
     if prompt_choice == "Recommended":
-        allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "Nuts", "Fruits", "Gluten", "Soy", "Dairy", "Honey"])
+        allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "Tree Nuts", "Peanuts", "Crustecean Shellfish", "Fish", "Gluten", "Wheat", "Soy", "Soybeans", "Dairy", "Honey", "Sesame"])
         if "None" in allergies:
             allergies = None
-        types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Italian", "French", "Japanese", "Thai"])
+        types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Spanish", "Italian", "French", "Japanese", "Thai", "German", "Scandinavian", "Polish", "Ethiopian", "Nigerian", "South African", "Egyptian"])
         if "None" in types_of_food:
             types_of_food = None
         available_ingredients = st.sidebar.text_input(label = "Optional: List your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
@@ -55,32 +56,28 @@ def cs_sidebar():
             "available_ingredients": None,
             "drink_pairing": False
         }
+    st.sidebar.text(LEGAL_DISCLAIMER)
     return prompt_data_config, generate_recipe_bool
 
 def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
 
     col1, = st.columns(1)
-
    
     prompt_data = PromptData()
     prompt_data.set_prompt_data(prompt_data_config=prompt_data_config)
     prompt = Prompt(prompt_data=prompt_data)
     ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
-    legal_disclaimer = "\n LEGAL DISCLAIMER: The creator(s) of Gemineats and creator(s) of services leveraged by Gemineats are not responsible \
-        for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. \
-            Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. \
-                In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
     
     if prompt_data.prompt_choice == "Recommended":
         if generate_recipe_bool is True:
             prompt.construct_prompt()
             ai_model.generate_recipe(prompt = prompt)
             message_placeholder = st.empty()
-            message_placeholder.markdown(ai_model.recipe  + "\n" + legal_disclaimer + "▌")
-            message_placeholder.markdown(ai_model.recipe  + "\n" + legal_disclaimer)
+            message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe + "▌")
+            message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
             st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
-            st.download_button("Save Recipe", data = ai_model.recipe  + "\n" + legal_disclaimer)
+            st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt", data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
     elif prompt_data.prompt_choice == "Custom":
         # Display text
         for message in st.session_state.messages:
@@ -88,7 +85,6 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                 st.markdown(message["content"])
 
         if custom_prompt := st.chat_input("What are you hungry for?"):
-            generate_recipe_bool = True
             prompt.construct_prompt(prompt=custom_prompt)
             st.session_state.messages.append({"role": "user", "content": custom_prompt})
             with st.chat_message("user"):
@@ -97,13 +93,11 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
             with st.chat_message("assistant"):
                 message_placeholder = st.empty()
                 ai_model.generate_recipe(prompt = prompt)
-                message_placeholder.markdown(ai_model.recipe  + "\n" + legal_disclaimer + "▌")
-                message_placeholder.markdown(ai_model.recipe  + "\n" + legal_disclaimer)
+                message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
+                message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
             st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
             
-            st.download_button("Save Recipe", data = ai_model.recipe  + "\n" + legal_disclaimer)
-    if generate_recipe_bool is False:
-        st.markdown(legal_disclaimer, unsafe_allow_html=True)
+            st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt",data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
 
 
     return None
