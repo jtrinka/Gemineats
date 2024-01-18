@@ -59,7 +59,7 @@ def cs_sidebar():
             "nonalcoholic_drink_pairing": False,
             "alcoholic_drink_pairing": False
         }
-    creator_information = st.sidebar.toggle(label = "Show Gemineats Creator Info.")
+    creator_information = st.sidebar.toggle(label = "Show Gemineats Creator Information")
     if creator_information is True:
         url = "https://github.com/jtrinka"
         st.sidebar.markdown("Dr. Jordan Christopher Trinka, Ph.D. is a data scientist with a background in applied statistics and machine/deep learning. Dr. Trinka created Gemineats to offer a quick and tasty solution to the problem of finding the perfect recipe. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
