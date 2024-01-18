@@ -4,7 +4,7 @@ import base64
 from lib.google_model.google_model import GoogleModel
 from lib.google_model.prompt import PromptData, Prompt
 
-LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator(s) of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
+LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
 
 st.set_page_config(
      page_title='Gemineats',
@@ -56,6 +56,10 @@ def cs_sidebar():
             "available_ingredients": None,
             "drink_pairing": False
         }
+    creator_information = st.sidebar.toggle(label = "Show Gemineats Creator Info.")
+    if creator_information is True:
+        url = "https://github.com/jtrinka"
+        st.sidebar.markdown("Dr. Jordan Christopher Trinka, Ph.D. is a data scientist with a background in applied statistics and machine/deep learning. Dr. Trinka created Gemineats to offer a quick and tasty solution to the problem of finding the perfect recipe. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
     st.sidebar.text(LEGAL_DISCLAIMER)
     return prompt_data_config, generate_recipe_bool
 
