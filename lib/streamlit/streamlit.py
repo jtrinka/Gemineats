@@ -69,7 +69,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
     st.session_state.messages = []
     legal_disclaimer = "\n LEGAL DISCLAIMER: The creator(s) of Gemineats and creator(s) of services leveraged by Gemineats are not responsible \
         for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. \
-            Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies. \
+            Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. \
                 In addition, by using the drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for adults of age 21 years or older."
     
     if prompt_data.prompt_choice == "Recommended":
