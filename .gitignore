@@ -6,3 +6,5 @@ configs/default.json
 __pycache__
 # Ignore .vscode
 .vscode
+# Ignore secrets.toml
+.streamlit/secrets.toml
