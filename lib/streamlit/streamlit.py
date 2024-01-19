@@ -39,7 +39,7 @@ def cs_sidebar():
         if available_ingredients == "None":
             available_ingredients = None
         nonalcoholic_drink_pairing = st.sidebar.toggle(label = "Request a nonalcoholic drink pairing")
-        alcoholic_drink_pairing = st.sidebar.toggle(label = "Request an alcoholic drink pairing (selecting this option confirms the user is 21 years of age or older)")
+        alcoholic_drink_pairing = st.sidebar.toggle(label = "Request an alcoholic drink pairing (by selecting this option, the user confirms that they are 21 years of age or older)")
         generate_recipe_bool = st.sidebar.button("Generate Recipe")
         prompt_data_config = {
             "prompt_choice": "Recommended",
