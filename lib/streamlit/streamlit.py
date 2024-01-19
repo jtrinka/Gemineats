@@ -75,16 +75,23 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
     prompt = Prompt(prompt_data=prompt_data)
     ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
+
+    
     
     if prompt_data.prompt_choice == "Recommended":
         if generate_recipe_bool is True:
-            prompt.construct_prompt()
-            ai_model.generate_recipe(prompt = prompt)
-            message_placeholder = st.empty()
-            message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe + "▌")
-            message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
-            st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
-            st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt", data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
+            def recommended_prompt():
+                try:
+                    prompt.construct_prompt()
+                    ai_model.generate_recipe(prompt = prompt)
+                    message_placeholder = st.empty()
+                    message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe + "▌")
+                    message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
+                    st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+                    st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt", data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
+                except:
+                    recommended_prompt()
+            recommended_prompt()
     elif prompt_data.prompt_choice == "Custom":
         # Display text
         for message in st.session_state.messages:
@@ -98,14 +105,17 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                 st.markdown(custom_prompt)
 
             with st.chat_message("assistant"):
-                message_placeholder = st.empty()
-                ai_model.generate_recipe(prompt = prompt)
-                message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
-                message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
-            st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+                def recommended_prompt():
+                    try:
+                        message_placeholder = st.empty()
+                        ai_model.generate_recipe(prompt = prompt)
+                        message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
+                        message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
+                        st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
+                        st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt",data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
+                    except:
+                        recommended_prompt()
+            recommended_prompt()
             
-            st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt",data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
-
-
     return None
 
