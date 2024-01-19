@@ -31,10 +31,10 @@ def cs_sidebar():
     if prompt_choice == "Recommended":
         allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "Tree Nuts", "Peanuts", "Crustecean Shellfish", "Fish", "Gluten", "Wheat", "Soy", "Soybeans", "Dairy", "Honey", "Sesame"])
         if "None" in allergies:
-            allergies = None
+            allergies = []
         types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Spanish", "Italian", "French", "Japanese", "Thai", "German", "Scandinavian", "Polish", "Ethiopian", "Nigerian", "South African", "Egyptian"])
         if "None" in types_of_food:
-            types_of_food = None
+            types_of_food = []
         available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
         if available_ingredients == "None":
             available_ingredients = None
@@ -53,8 +53,8 @@ def cs_sidebar():
         generate_recipe_bool = False
         prompt_data_config = {
             "prompt_choice": "Custom",
-            "allergies": None,
-            "types_of_food": None,
+            "allergies": [],
+            "types_of_food": [],
             "available_ingredients": None,
             "nonalcoholic_drink_pairing": False,
             "alcoholic_drink_pairing": False

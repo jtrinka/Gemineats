@@ -30,10 +30,6 @@ class Prompt:
 
     def construct_allergy_prompt(self):
         allergy_string = ""
-        if self.allergies is not None:
-            N_allergies = len(self.allergies)
-        else:
-            N_allergies = 0
         N_allergies = len(self.allergies)
         if N_allergies == 0:
             return allergy_string
@@ -51,10 +47,7 @@ class Prompt:
 
     def construct_type_of_food_prompt(self):
         types_of_food_string = ""
-        if self.types_of_food is not None:
-            N_types = len(self.types_of_food)
-        else:
-            N_types = 0
+        N_types = len(self.types_of_food)
         if N_types == 0:
             return types_of_food_string
         elif N_types == 1:
