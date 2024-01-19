@@ -8,3 +8,5 @@ __pycache__
 .vscode
 # Ignore secrets.toml
 .streamlit/secrets.toml
+# Ignore recipe_recommendations
+recipe_recommendations

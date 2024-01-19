@@ -18,7 +18,7 @@ class PromptData:
         self.alcoholic_drink_pairing = prompt_data_config["alcoholic_drink_pairing"]
 class Prompt:
     def __init__(self, prompt_data: PromptData):
-        self.prompt = 'You are a recipe recommendation engine whose job it is to give one delicious food recipe. The format of the recommended food recipe should be the title of the food recipe followed by a bulleted list of ingredients for the food recipe which is then followed by the instructions of how to make the food recipe.'
+        self.prompt = 'You are a recipe recommendation engine whose job it is to give one recipe recommendation. The title of the food recommendation section of the recipe recommendation is Food Recommendation. The food recommendation section is the first section of the recipe recommendation. The format of the food recommendation section should be first the title of the food recipe followed by a bulleted list of ingredients for the food recipe which is then followed by an itemized list of instructions of how to make the food recipe.'
         self.prompt_choice = prompt_data.prompt_choice
         self.alcoholic_drink_pairing = False
         if self.prompt_choice == 'Recommended':
@@ -67,24 +67,24 @@ class Prompt:
         if self.available_ingredients == "" or self.available_ingredients is None:
             return available_ingredients_string
         else:
-            available_ingredients_string += " The food recipe recommendation should also use the following ingredients: " + self.available_ingredients + "."
+            available_ingredients_string += " The food recommendation should also use the following ingredients: " + self.available_ingredients + "."
             return available_ingredients_string
         
     def construct_nonalcoholic_drink_pairing_prompt(self):
         if self.nonalcoholic_drink_pairing is False:
             return ""
         elif self.nonalcoholic_drink_pairing is True and self.construct_allergy_prompt() != "":
-            return "Can you recommend one nonalcoholic drink pairing with the recommended meal that adheres to the aforementioned allergy information? In addition, the nonalcoholic drink pairing recommendation should follow the same format as the meal recommendation beginning with the title of the nonalcoholic drink, followed by the ingredients for the nonalcoholic drink, followed by the instructions of how to make the nonalcoholic drink."
+            return "Can you recommend one nonalcoholic drink pairing with the food recommendation that adheres to the aforementioned allergy information? The title of the nonalcoholic drink section of the recipe recommendation is Nonalcoholic Drink Recommendation. In addition, the nonalcoholic drink section should follow the same format as the food recommendation section beginning with the title of the nonalcoholic drink, followed by a bulleted list of ingredients for the nonalcoholic drink, followed by an itemized list of instructions of how to make the nonalcoholic drink."
         elif self.nonalcoholic_drink_pairing is True and self.construct_allergy_prompt() == "":
-            return "Can you recommend one nonalcoholic drink pairing with the recommended meal? In addition, the nonalcoholic drink pairing recommendation should follow the same format as the meal recommendation beginning with the title of the nonalcoholic drink, followed by the ingredients for the nonalcoholic drink, followed by the instructions of how to make the nonalcoholic drink."
+            return "Can you recommend one nonalcoholic drink pairing with the food recommendation? The title of the nonalcoholic drink section of the recipe recommendation is Nonalcoholic Drink Recommendation. In addition, the nonalcoholic drink section should follow the same format as the food recommendation section beginning with the title of the nonalcoholic drink, followed by a bulleted list of ingredients for the nonalcoholic drink, followed by an itemized list of instructions of how to make the nonalcoholic drink."
     
     def construct_alcoholic_drink_pairing_prompt(self):
         if self.alcoholic_drink_pairing is False:
             return ""
         elif self.alcoholic_drink_pairing is True and self.construct_allergy_prompt() != "":
-            return "In addition to all of that, can you recommend one alcoholic cocktail pairing with the recommended meal that adheres to the aforementioned allergy information? In addition, the alcoholic cocktail pairing recommendation should follow the same format as the meal recommendation beginning with the title of the alcoholic cocktail, followed by the ingredients for the alcoholic cocktail, followed by the instructions of how to make the alcoholic cocktail."
+            return "In addition to all of that, can you recommend one alcoholic cocktail pairing with the food recommendation that adheres to the aforementioned allergy information? The title of the alcoholic cocktail section of the recipe recommendation is Alcoholic Cocktail Recommendation (21+). The alcoholic cocktail section is the last section in the recipe recommendation. In addition, the alcoholic cocktail section should follow the same format as the food recommendation section beginning with the title of the alcoholic cocktail, followed by a bulleted list of ingredients for the alcoholic cocktail, followed by an itemized list of instructions of how to make the alcoholic cocktail."
         elif self.alcoholic_drink_pairing is True and self.construct_allergy_prompt() == "":
-            return "In addition to all of that, can you recommend one alcoholic cocktail pairing with the recommended meal? In addition, the alcoholic cocktail pairing recommendation should follow the same format as the meal recommendation beginning with the title of the alcoholic cocktail, followed by the ingredients for the alcoholic cocktail, followed by the instructions of how to make the alcoholic cocktail."
+            return "In addition to all of that, can you recommend one alcoholic cocktail pairing with the food recommendation? The title of the alcoholic cocktail section of the recipe recommendation is Alcoholic Cocktail Recommendation (21+). The alcoholic cocktail section is the last section in the recipe recommendation. In addition, the alcoholic cocktail section should follow the same format as the food recommendation section beginning with the title of the alcoholic cocktail, followed by a bulleted list of ingredients for the alcoholic cocktail, followed by an itemized list of instructions of how to make the alcoholic cocktail."
 
 
     def construct_prompt(self, prompt = ""):
@@ -92,11 +92,11 @@ class Prompt:
             if self.construct_allergy_prompt() == "":
                 total_allergy_prompt = ""
             else:
-                total_allergy_prompt = " The food recipe recommendation cannot contain " + self.construct_allergy_prompt() + "."
+                total_allergy_prompt = " The food recommendation cannot contain " + self.construct_allergy_prompt() + "."
             if self.construct_type_of_food_prompt() == "":
                 total_food_prompt = ""
             else:
-                total_food_prompt = " The food recipe recommendation should have influences from " + self.construct_type_of_food_prompt() + " cuisines."     
+                total_food_prompt = " The food recommendation should have influences from " + self.construct_type_of_food_prompt() + " cuisines."     
             if self.construct_available_ingredients_prompt() == "":
                 total_available_ingredients = ""
             else:
