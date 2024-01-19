@@ -119,6 +119,6 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                         if attempt_count <= 10:
                             recommended_prompt(attempt_count=attempt_count)
             recommended_prompt()
-            
+    del prompt_data, prompt, ai_model
     return None
 
