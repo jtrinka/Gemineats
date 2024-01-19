@@ -66,7 +66,7 @@ def cs_sidebar():
     st.sidebar.text(LEGAL_DISCLAIMER)
     return prompt_data_config, generate_recipe_bool
 
-def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
+def cs_body(prompt_data_config, generate_recipe_bool = False):
 
     col1, = st.columns(1)
    
@@ -78,6 +78,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
         if generate_recipe_bool is True:
             def recommended_prompt():
                 try:
+                    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
                     ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
                     prompt.construct_prompt()
                     ai_model.generate_recipe(prompt = prompt)
@@ -105,6 +106,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                 def recommended_prompt():
                     try:
                         message_placeholder = st.empty()
+                        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
                         ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
                         ai_model.generate_recipe(prompt = prompt)
                         message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
