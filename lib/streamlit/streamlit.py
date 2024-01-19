@@ -73,15 +73,12 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
     prompt_data = PromptData()
     prompt_data.set_prompt_data(prompt_data_config=prompt_data_config)
     prompt = Prompt(prompt_data=prompt_data)
-    ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
-
-    
-    
     if prompt_data.prompt_choice == "Recommended":
         if generate_recipe_bool is True:
             def recommended_prompt():
                 try:
+                    ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
                     prompt.construct_prompt()
                     ai_model.generate_recipe(prompt = prompt)
                     message_placeholder = st.empty()
@@ -108,6 +105,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                 def recommended_prompt():
                     try:
                         message_placeholder = st.empty()
+                        ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
                         ai_model.generate_recipe(prompt = prompt)
                         message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
                         message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
