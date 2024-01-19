@@ -18,7 +18,7 @@ class PromptData:
         self.alcoholic_drink_pairing = prompt_data_config["alcoholic_drink_pairing"]
 class Prompt:
     def __init__(self, prompt_data: PromptData):
-        self.prompt = 'You are a recipe recommendation engine whose job it is to give one recipe recommendation. The title of the food recommendation section of the recipe recommendation is Food Recommendation. The food recommendation section is the first section of the recipe recommendation. The format of the food recommendation section should be first the title of the food recipe followed by a bulleted list of ingredients for the food recipe which is then followed by an itemized list of instructions of how to make the food recipe.'
+        self.prompt = 'You are a recipe recommendation engine whose job it is to give one recipe recommendation. The title of the food recommendation section of the recipe recommendation is Food Recommendation. The food recommendation section contains the food recommendation. The food recommendation section is the first section of the recipe recommendation. The format of the food recommendation section should be first the title of the food recommendation followed by a bulleted list of ingredients for the food recommendation which is then followed by an itemized list of instructions of how to make the food recommendation.'
         self.prompt_choice = prompt_data.prompt_choice
         self.alcoholic_drink_pairing = False
         if self.prompt_choice == 'Recommended':
