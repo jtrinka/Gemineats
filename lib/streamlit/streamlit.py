@@ -66,21 +66,21 @@ def cs_sidebar():
     st.sidebar.text(LEGAL_DISCLAIMER)
     return prompt_data_config, generate_recipe_bool
 
-def cs_body(prompt_data_config, generate_recipe_bool = False):
+def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
 
     col1, = st.columns(1)
    
     prompt_data = PromptData()
     prompt_data.set_prompt_data(prompt_data_config=prompt_data_config)
     prompt = Prompt(prompt_data=prompt_data)
+    ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
     st.session_state.messages = []
     if prompt_data.prompt_choice == "Recommended":
+        prompt.construct_prompt()
         if generate_recipe_bool is True:
-            def recommended_prompt():
+            attempt_count = 0
+            def recommended_prompt(attempt_count = attempt_count):
                 try:
-                    GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-                    ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
-                    prompt.construct_prompt()
                     ai_model.generate_recipe(prompt = prompt)
                     message_placeholder = st.empty()
                     message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe + "▌")
@@ -88,7 +88,9 @@ def cs_body(prompt_data_config, generate_recipe_bool = False):
                     st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
                     st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt", data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
                 except:
-                    recommended_prompt()
+                    attempt_count += 1
+                    if attempt_count <= 10:
+                        recommended_prompt()
             recommended_prompt()
     elif prompt_data.prompt_choice == "Custom":
         # Display text
@@ -103,18 +105,19 @@ def cs_body(prompt_data_config, generate_recipe_bool = False):
                 st.markdown(custom_prompt)
 
             with st.chat_message("assistant"):
-                def recommended_prompt():
+                attempt_count = 0
+                def recommended_prompt(attempt_count = attempt_count):
                     try:
                         message_placeholder = st.empty()
-                        GOOGLE_API_KEY = st.secrets["GOOGLE_API_KEY"]
-                        ai_model = GoogleModel(GOOGLE_API_KEY = GOOGLE_API_KEY, model = "gemini-pro")
                         ai_model.generate_recipe(prompt = prompt)
                         message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
                         message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
                         st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
                         st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt",data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
                     except:
-                        recommended_prompt()
+                        attempt_count += 1
+                        if attempt_count <= 10:
+                            recommended_prompt(attempt_count=attempt_count)
             recommended_prompt()
             
     return None
