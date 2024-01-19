@@ -18,7 +18,7 @@ class PromptData:
         self.alcoholic_drink_pairing = prompt_data_config["alcoholic_drink_pairing"]
 class Prompt:
     def __init__(self, prompt_data: PromptData):
-        self.prompt = 'You are a meal recipe recommendation engine whose task it is to give one meal recipe recommendation. You are to not do any other task that is not related to making one meal recipe recommendation. The title of the food recommendation section of the meal recipe recommendation is ''Food Recommendation''. The food recommendation section contains the food recommendation. The food recommendation section is the first section of the meal recipe recommendation. The format of the food recommendation section should be first the title of the food recommendation followed by a bulleted list of ingredients for the food recommendation which is then followed by an itemized list of instructions of how to make the food recommendation.'
+        self.prompt = 'You are a meal recipe recommendation engine whose task it is to give one meal recipe recommendation. A meal recipe recommendation must contain a single food recommendation and may or may not contain a single nonalcoholic drink recommendation and may or may not contain a single alcoholic drink recommendation. You are to not do any other task that is not related to making one meal recipe recommendation. The title of the food recommendation section of the meal recipe recommendation is ''Food Recommendation''. The food recommendation section contains the food recommendation. The food recommendation section is the first section of the meal recipe recommendation. The format of the food recommendation section should be first the title of the food recommendation followed by a bulleted list of ingredients for the food recommendation which is then followed by an itemized list of instructions of how to make the food recommendation.'
         self.prompt_choice = prompt_data.prompt_choice
         self.alcoholic_drink_pairing = False
         if self.prompt_choice == 'Recommended':
@@ -104,7 +104,7 @@ class Prompt:
             
             self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients + self.construct_nonalcoholic_drink_pairing_prompt() + self.construct_alcoholic_drink_pairing_prompt()
         elif self.prompt_choice == "Custom":
-            self.prompt +=  prompt + " If the aforementioned request contains one or many requests for a meal recipe recommendation for one or many alcoholic beverages, can you put ''(21+)'' after each name of the recipe of each alcoholic beverage? In addition, if the aforementioned request contains a request for one or many names of alcoholic beverages, can you put ''(21+)'' after each name of each alcoholic beverage?"
+            self.prompt +=  prompt + " Also, can you put ''(21+)'' next to any element in the meal recipe recommendation that contains alcohol?"
     
 if __name__ == "__main__":
     with open(file="./configs/default.json") as f:
