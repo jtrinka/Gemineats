@@ -64,6 +64,8 @@ def cs_sidebar():
         url = "https://github.com/jtrinka"
         st.sidebar.markdown("Dr. Jordan Christopher Trinka, Ph.D. is a data scientist with a background in applied statistics and machine/deep learning. Dr. Trinka created Gemineats to offer a quick and tasty solution to the problem of finding the perfect recipe. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
     st.sidebar.text(LEGAL_DISCLAIMER)
+    st.sidebar.markdown('''<small>Copyright \u00A9 2024 Jordan Christopher Trinka. All Rights Reserved.</small>''', unsafe_allow_html=True)
+
     return prompt_data_config, generate_recipe_bool
 
 def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
