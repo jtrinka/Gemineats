@@ -4,7 +4,7 @@ import base64
 from lib.google_model.google_model import GoogleModel
 from lib.google_model.prompt import PromptData, Prompt
 
-LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."
+LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."
 
 st.set_page_config(
      page_title='Gemineats',
@@ -25,7 +25,7 @@ def cs_sidebar():
     st.sidebar.header('Gemineats')
 
     st.sidebar.markdown('''
-<small>Welcome to Gemineats! This app leverages Google's Gemini-pro large language multimodal AI model, custom prompt engineering, and streamlit to offer delicious, unique, and fun recipes sure to wow family and guests.</small>
+<small>Welcome to Gemineats! This app leverages Google's Gemini-pro large language multimodal AI model, custom prompt engineering, and streamlit to offer delicious, unique, and fun meal recommendations sure to wow family and guests.</small>
     ''', unsafe_allow_html=True)
     prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
     if prompt_choice == "Recommended":
@@ -62,8 +62,8 @@ def cs_sidebar():
     creator_information = st.sidebar.toggle(label = "Show Gemineats Creator Information")
     if creator_information is True:
         url = "https://github.com/jtrinka"
-        st.sidebar.markdown("Dr. Jordan Christopher Trinka, Ph.D. is a data scientist with a background in applied statistics and machine/deep learning. Dr. Trinka created Gemineats to offer a quick and tasty solution to the problem of finding the perfect recipe. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
-    st.sidebar.markdown('''<small>LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the recipe recommendations that are offered by the Gemineats app. Users are advised to always double check the recipe recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older.</small>''', unsafe_allow_html=True)
+        st.sidebar.markdown("Dr. Jordan Christopher Trinka, Ph.D. is a data scientist with a background in applied statistics and machine/deep learning. Dr. Trinka created Gemineats to offer a quick and tasty solution to the problem of finding the perfect meal. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
+    st.sidebar.markdown('''<small>LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink recommendation feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older.</small>''', unsafe_allow_html=True)
     st.sidebar.markdown('''<small>Copyright \u00A9 2023 Jordan Christopher Trinka. All Rights Reserved.</small>''', unsafe_allow_html=True)
 
     return prompt_data_config, generate_recipe_bool
@@ -85,10 +85,10 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                 try:
                     ai_model.generate_recipe(prompt = prompt)
                     message_placeholder = st.empty()
-                    message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe + "▌")
-                    message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
+                    message_placeholder.markdown("The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe + "▌")
+                    message_placeholder.markdown("The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe)
                     st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
-                    st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt", data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
+                    st.download_button("Save Recipe", file_name="gemineats_meal_recommendation.txt", data = "The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
                 except:
                     attempt_count += 1
                     if attempt_count <= 10:
@@ -112,10 +112,10 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
                     try:
                         message_placeholder = st.empty()
                         ai_model.generate_recipe(prompt = prompt)
-                        message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
-                        message_placeholder.markdown("The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe)
+                        message_placeholder.markdown("The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe  + "▌")
+                        message_placeholder.markdown("The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe)
                         st.session_state.messages.append({"role": "assistant", "content": ai_model.recipe})
-                        st.download_button("Save Recipe", file_name="gemineats_recipe_recommendation.txt",data = "The Gemineats recipe recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
+                        st.download_button("Save Recipe", file_name="gemineats_meal_recommendation.txt",data = "The Gemineats meal recommendation is as follows: \n \n" + ai_model.recipe  + "\n \n" + LEGAL_DISCLAIMER)
                     except:
                         attempt_count += 1
                         if attempt_count <= 10:
