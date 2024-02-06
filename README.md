@@ -23,13 +23,28 @@ The recommended prompt feature offers the following options to the user:
 
 ### Custom Prompt Features
 
-The custom prompt feature simply leverages the base prompt and the user input to make a meal recommendation
+The custom prompt feature simply leverages the base prompt and the user input to make a meal recommendation.
 
+## Installation Instructions
 
+To install and launch the Gemineats app on your local area network, first follow steps:
 
-# Installation Instructions
+    1. Create a [Google account](https://www.google.com/)
+    2. Obtain a [Google API key](https://developers.google.com/maps/documentation/embed/get-api-key)
+    3. Install the [Google SDK](https://cloud.google.com/sdk)
+    4. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
 
-To launch the app on your computer and local area network you will need to first download and install Anaconda and miniconda. Then in a bash shell or Anaconda interpreter, you should run `conda create -n gemineats python=3.9` After you create the environment with python version 3.9.x, you need to activate it and install the dependencies using `pip install -r requirements.txt`. You'll also need to obtain a google API key and install the Google SDK to leverage the Gemini-pro model. Once all dependencies are installed and the Google API key is leveraged in the `default.json` config, you can run `streamlit run Gemineats.py` to launch the app.
+Then execute the following commands in a terminal from your directory of choice.
+
+```bash
+git clone https://github.com/jtrinka/Gemineats.git
+cd gemineats
+conda create -n gemineats python=3.9
+conda activate gemineats
+pip install -r requirements.txt
+```
+
+Then add your Google API key to the ```secrets.toml``` and ```default.json``` files found in ```.streamlit```. From here, you can run the service in the terminal by leveraging ```main.py``` or you can launch the app on your local area network by running ```streamlit run Gemineats.py```. 
 
 
 #### Legal Disclaimer
