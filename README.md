@@ -27,7 +27,8 @@ The custom prompt feature simply leverages the base prompt and the user input to
 
 ## Installation Instructions
 
-To install and launch the Gemineats app on your local area network, first follow steps:&nbsp;
+To install and launch the Gemineats app on your local area network, first follow steps:
+&nbsp;
     1. Create a [Google account](https://www.google.com/)
     2. Obtain a [Google API key](https://developers.google.com/maps/documentation/embed/get-api-key)
     3. Install the [Google SDK](https://cloud.google.com/sdk)
