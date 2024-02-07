@@ -2,14 +2,14 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gemineats.streamlit.app/)
 
-Gemineats is a user-friendly app that leverages custom prompt engineering, Google's Gemini-pro large language multimodal AI model, and streamlit to offer delicious, unique, and fun recipes sure to wow family and guests. This repository contains the software that is used for prompt engineering, standing up the Google API, and defining the streamlit app. The app is hosted [here](https://gemineats.streamlit.app/).
+Gemineats is a user-friendly app that leverages custom prompt engineering, Google's Gemini-pro large language multimodal AI model, and streamlit to offer delicious, unique, and fun recipes sure to wow family and guests. This repository contains the software that is used to deploy the app. The Gemineats app is hosted [here](https://gemineats.streamlit.app/).
 
 ## Core Features
 
 The base prompt that is leveraged in Gemineats specifies that the Gemini-pro model is to act as a meal recommendation engine and should return an answer in a template form. The app then offers the following two types of prompting that accompany the base prompt:
 
 1. Recommended Prompt - Leverages user selections and under-the-hood prompt engineering to make a meal recommendation
-2. Custom Prompt - Leverages exact user input with the base prompt in the meal recommendation
+2. Custom Prompt - Leverages exact user input with the base prompt in crafting the meal recommendation
 
 ### Recommended Prompt Features
 
@@ -27,7 +27,7 @@ The custom prompt feature simply leverages the base prompt and the user input to
 
 ## Local Installation Instructions
 
-To install and launch the Gemineats app on your local area network, first follow steps:
+To install and launch the Gemineats app on your local area network, first follow these steps:
 
 1. Create a [Google account](https://www.google.com/)
 2. Obtain a [Google API key](https://developers.google.com/maps/documentation/embed/get-api-key)
