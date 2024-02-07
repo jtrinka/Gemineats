@@ -50,4 +50,4 @@ Then add your Google API key to the ```secrets.toml``` and ```default.json``` fi
 #### Legal Disclaimer
 The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink pairing recommendation feature, or requesting an alcoholic drink by itself or as a pairing in the custom prompt feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older.
 
-Copyright © 2023 Jordan Christopher Trinka. All Rights Reserved.
+Copyright © 2024 Jordan Christopher Trinka. All Rights Reserved.
