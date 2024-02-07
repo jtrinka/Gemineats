@@ -2,7 +2,7 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gemineats.streamlit.app/)
 
-Gemineats is a user-friendly app that leverages custom prompt engineering, Google's Gemini-pro large language multimodal AI model, and streamlit to offer delicious, unique, and fun recipes sure to wow family and guests. This repository contains the software that is used to deploy the app. The Gemineats app is hosted [here](https://gemineats.streamlit.app/).
+Gemineats is a user-friendly app that leverages custom prompt engineering, Google's Gemini-pro large language multimodal AI model, and streamlit to offer delicious, unique, and fun recipes sure to wow family and guests. This repository contains the software used to deploy the app. The Gemineats app is hosted [here](https://gemineats.streamlit.app/).
 
 ## Core Features
 
