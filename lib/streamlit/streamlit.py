@@ -25,7 +25,7 @@ def cs_sidebar():
     st.sidebar.header('Gemineats')
 
     st.sidebar.markdown('''
-<small>Welcome to Gemineats! This app leverages Google's Gemini-pro large language multimodal AI model, custom prompt engineering, and streamlit to offer delicious, unique, and fun meal recommendations sure to wow family and guests.</small>
+<small>Welcome to Gemineats! This app leverages custom prompt engineering, Google's Gemini-pro large language multimodal AI model, and streamlit to offer delicious, unique, and fun meal recommendations sure to wow family and guests.</small>
     ''', unsafe_allow_html=True)
     prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
     if prompt_choice == "Recommended":
