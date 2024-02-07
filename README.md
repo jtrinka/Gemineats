@@ -44,7 +44,7 @@ conda activate gemineats
 pip install -r requirements.txt
 ```
 
-Then add your Google API key to the ```secrets.toml``` and ```default.json``` files found in ```.streamlit```. From here, you can run the service in the terminal by leveraging ```main.py``` or you can launch the app on your local area network by running ```streamlit run Gemineats.py```. 
+Then add your Google API key to the ```secrets.toml``` and ```default.json``` files found in ```.streamlit``` and ```configs``` respectively. From here, you can run the service in the terminal by leveraging ```main.py``` or you can launch the app on your local area network by running ```streamlit run Gemineats.py```. 
 
 
 #### Legal Disclaimer
