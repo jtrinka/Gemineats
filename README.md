@@ -8,31 +8,31 @@ Gemineats is a user-friendly app that leverages custom prompt engineering, Googl
 
 The base prompt that is leveraged in Gemineats specifies that the Gemini-pro model is to act as a meal recommendation engine and should return an answer in a template form. The app then offers the following two types of prompting that accompany the base prompt:
 
-    1. Recommended Prompt - Leverages user selections and under-the-hood prompt engineering to make a meal recommendation
-    2. Custom Prompt - Leverages exact user input with the base prompt in the meal recommendation
+1. Recommended Prompt - Leverages user selections and under-the-hood prompt engineering to make a meal recommendation
+2. Custom Prompt - Leverages exact user input with the base prompt in the meal recommendation
 
 ### Recommended Prompt Features
 
 The recommended prompt feature offers the following options to the user:
 
-    * Relevant Allergies - Causes Gemineats to make a meal recommendation that avoids the specified food allergies
-    * Food Styles - Causes Gemineats to make a meal recommendation that leverages certain styles of food
-    * List of Available Ingredients - Causes Gemineats to make a meal recommendation that leverages specified ingredients
-    * Requesting a Nonalcoholic Drink Pairing - Causes Gemineats to make a meal recommendation that includes a nonalcoholic drink pairing that goes with the food
-    * Requesting an Alcoholic Drink Pairing - Causes Gemineats to make a meal recommendation that includes an alcoholic drink pairing that goes with the food
+* Relevant Allergies - Causes Gemineats to make a meal recommendation that avoids the specified food allergies
+* Food Styles - Causes Gemineats to make a meal recommendation that leverages certain styles of food
+* List of Available Ingredients - Causes Gemineats to make a meal recommendation that leverages specified ingredients
+* Requesting a Nonalcoholic Drink Pairing - Causes Gemineats to make a meal recommendation that includes a nonalcoholic drink pairing that goes with the food
+* Requesting an Alcoholic Drink Pairing - Causes Gemineats to make a meal recommendation that includes an alcoholic drink pairing that goes with the food
 
 ### Custom Prompt Features
 
 The custom prompt feature simply leverages the base prompt and the user input to make a meal recommendation.
 
-## Installation Instructions
+## Local Installation Instructions
 
 To install and launch the Gemineats app on your local area network, first follow steps:
-&nbsp;
-    1. Create a [Google account](https://www.google.com/)
-    2. Obtain a [Google API key](https://developers.google.com/maps/documentation/embed/get-api-key)
-    3. Install the [Google SDK](https://cloud.google.com/sdk)
-    4. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
+
+1. Create a [Google account](https://www.google.com/)
+2. Obtain a [Google API key](https://developers.google.com/maps/documentation/embed/get-api-key)
+3. Install the [Google SDK](https://cloud.google.com/sdk)
+4. Install [miniconda](https://docs.anaconda.com/free/miniconda/)
 
 Then execute the following commands in a terminal from your directory of choice.
 
