@@ -1,4 +1,4 @@
-# Gemineats
+# Gemineats Version 1.0.0
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gemineats.streamlit.app/)
 
