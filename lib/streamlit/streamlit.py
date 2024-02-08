@@ -100,7 +100,7 @@ def cs_body(GOOGLE_API_KEY, prompt_data_config, generate_recipe_bool = False):
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
 
-        if custom_prompt := st.chat_input("Please use full sentences when crafting your meal query."):
+        if custom_prompt := st.chat_input("Please use full sentences in your request."):
             prompt.construct_prompt(prompt=custom_prompt)
             st.session_state.messages.append({"role": "user", "content": custom_prompt})
             with st.chat_message("user"):
