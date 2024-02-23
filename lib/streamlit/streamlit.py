@@ -37,7 +37,7 @@ def cs_sidebar():
         types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Spanish", "Italian", "French", "Japanese", "Thai", "German", "Scandinavian", "Polish", "Ethiopian", "Nigerian", "South African", "Egyptian", "Mediterranean", "Middle Eastern"])
         if "None" in types_of_food:
             types_of_food = []
-        available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: beans, tomatoes, celery)")
+        available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
         if available_ingredients == "None":
             available_ingredients = None
         nonalcoholic_drink_pairing = st.sidebar.toggle(label = "Request a nonalcoholic drink pairing")
