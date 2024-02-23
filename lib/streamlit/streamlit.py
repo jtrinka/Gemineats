@@ -4,7 +4,9 @@ import base64
 from lib.google_model.google_model import GoogleModel
 from lib.google_model.prompt import PromptData, Prompt
 
-LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink pairing recommendation feature, or requesting an alcoholic drink by itself or as a pairing in the custom prompt feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."
+LEGAL_DISCLAIMER = "LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. " + \
+    "Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. " + \
+        "In addition, by using the alcoholic drink pairing recommendation feature, or requesting an alcoholic drink by itself or as a pairing in the custom prompt feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."
 
 st.set_page_config(
      page_title='Gemineats',
@@ -29,13 +31,13 @@ def cs_sidebar():
     ''', unsafe_allow_html=True)
     prompt_choice = st.sidebar.radio("Choose a prompt style:", ["Recommended", "Custom"])
     if prompt_choice == "Recommended":
-        allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "Tree Nuts", "Peanuts", "Crustecean Shellfish", "Fish", "Gluten", "Wheat", "Soy", "Soybeans", "Dairy", "Honey", "Sesame"])
+        allergies = st.sidebar.multiselect(label = "Select all relevant allergies (if any)", options = ["None", "tree nuts", "peanuts", "crustecean shellfish", "fish", "gluten", "wheat", "soy", "soybeans", "dairy", "honey", "sesame"])
         if "None" in allergies:
             allergies = []
         types_of_food = st.sidebar.multiselect(label = "Select all styles of food (if any)", options = ["None","American", "Chinese", "Mexican", "Spanish", "Italian", "French", "Japanese", "Thai", "German", "Scandinavian", "Polish", "Ethiopian", "Nigerian", "South African", "Egyptian", "Mediterranean", "Middle Eastern"])
         if "None" in types_of_food:
             types_of_food = []
-        available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: Beans, Tomatoes, Celery)")
+        available_ingredients = st.sidebar.text_input(label = "Optional: List all or some of your available ingredients separated by a comma and space (ex: beans, tomatoes, celery)")
         if available_ingredients == "None":
             available_ingredients = None
         nonalcoholic_drink_pairing = st.sidebar.toggle(label = "Request a nonalcoholic drink pairing")
@@ -63,7 +65,9 @@ def cs_sidebar():
     if creator_information is True:
         url = "https://github.com/jtrinka"
         st.sidebar.markdown("Jordan Christopher Trinka is a data scientist with a background in applied statistics and machine/deep learning. Jordan created Gemineats to offer a quick and tasty solution to the problem of finding the perfect meal. When not developing new and exciting technologies, he enjoys cooking, hiking, and fishing with his wife. His personal GitHub can be found at [https://github.com/jtrinka](%s)" % url)
-    st.sidebar.markdown('''<small>LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. In addition, by using the alcoholic drink pairing recommendation feature, or requesting an alcoholic drink by itself or as a pairing in the custom prompt feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older.</small>''', unsafe_allow_html=True)
+    st.sidebar.markdown('''<small>"LEGAL DISCLAIMER: The creator of Gemineats and creator(s) of services leveraged by Gemineats are not responsible for any harm caused to users of Gemineats who leverage, in-part or in-full, any form of the meal recommendations that are offered by the Gemineats app. " + \
+    "Users are advised to always double check the meal recommendations of Gemineats prior to leveraging the recommendation, in-part or in-full; especially if the user has allergies or can experience any other harmful effect from ingesting food or drink. " + \
+        "In addition, by using the alcoholic drink pairing recommendation feature, or requesting an alcoholic drink by itself or as a pairing in the custom prompt feature, the user confirms that they are 21 years of age or older and any recommended alcoholic drink that is made, in-part or in-full, is to be prepared for and consumed only by adults of age 21 years or older."</small>''', unsafe_allow_html=True)
     st.sidebar.markdown('''<small>Copyright \u00A9 2024 Jordan Christopher Trinka. All Rights Reserved.</small>''', unsafe_allow_html=True)
 
     return prompt_data_config, generate_recipe_bool
