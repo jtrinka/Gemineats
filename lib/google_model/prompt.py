@@ -127,7 +127,7 @@ class Prompt:
             
             self.prompt +=  total_allergy_prompt + total_food_prompt + total_available_ingredients + self.construct_nonalcoholic_drink_pairing_prompt() + self.construct_alcoholic_drink_pairing_prompt()
         elif self.prompt_choice == "Custom":
-            self.prompt +=  prompt + " Also, can you put ''(21+)'' next to any element in the meal recommendation that contains alcohol?"
+            self.prompt +=  ""+ prompt + " Also, can you put ''(21+)'' next to any element in the meal recommendation that contains alcohol?"
     
 if __name__ == "__main__":
     with open(file="./configs/default.json") as f:
